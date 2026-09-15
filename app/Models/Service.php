@@ -1,0 +1,3 @@
+<?php
+namespace App\Models;use Illuminate\Database\Eloquent\Model;use Illuminate\Database\Eloquent\Factories\HasFactory;
+class Service extends Model{use HasFactory;protected $fillable=['category_id','provider_id','name','slug','description','price','duration','image','rating','review_count','is_active'];protected function casts():array{return ['price'=>'decimal:2','rating'=>'decimal:2','is_active'=>'boolean'];}public function category(){return $this->belongsTo(Category::class);}public function provider(){return $this->belongsTo(User::class,'provider_id');}public function bookings(){return $this->hasMany(Booking::class);}public function reviews(){return $this->hasMany(Review::class);}}

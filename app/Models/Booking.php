@@ -1,0 +1,3 @@
+<?php
+namespace App\Models;use Illuminate\Database\Eloquent\Model;use Illuminate\Database\Eloquent\Factories\HasFactory;
+class Booking extends Model{use HasFactory;protected $fillable=['customer_id','provider_id','service_id','booking_date','booking_time','address','amount','status','payment_status','customer_note'];protected function casts():array{return ['booking_date'=>'date','amount'=>'decimal:2'];}public function customer(){return $this->belongsTo(User::class,'customer_id');}public function provider(){return $this->belongsTo(User::class,'provider_id');}public function service(){return $this->belongsTo(Service::class);}public function review(){return $this->hasOne(Review::class);}public function payment(){return $this->hasOne(Payment::class);}}

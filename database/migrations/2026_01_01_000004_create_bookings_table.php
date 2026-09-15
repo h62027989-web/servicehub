@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration;use Illuminate\Database\Schema\Blueprint;use Illuminate\Support\Facades\Schema;
+return new class extends Migration{public function up():void{Schema::create('bookings',function(Blueprint $t){$t->id();$t->foreignId('customer_id')->constrained('users')->cascadeOnDelete();$t->foreignId('provider_id')->constrained('users')->cascadeOnDelete();$t->foreignId('service_id')->constrained()->cascadeOnDelete();$t->date('booking_date');$t->time('booking_time');$t->text('address');$t->decimal('amount',10,2);$t->string('status')->default('pending');$t->string('payment_status')->default('unpaid');$t->text('customer_note')->nullable();$t->timestamps();});}public function down():void{Schema::dropIfExists('bookings');}};

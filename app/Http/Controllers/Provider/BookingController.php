@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Controllers\Provider;use App\Http\Controllers\Controller;use App\Models\Booking;use Illuminate\Http\Request;
+class BookingController extends Controller{public function index(){return view('provider.bookings.index',['bookings'=>auth()->user()->providerBookings()->with(['service','customer','payment'])->latest()->paginate(20)]);}public function update(Request $r,Booking $booking){abort_unless($booking->provider_id===auth()->id(),403);$d=$r->validate(['status'=>'required|in:confirmed,completed,cancelled']);if($d['status']==='completed'&&$booking->payment_status!=='paid')return back()->with('error','Booking must be paid before completion.');$booking->update($d);return back()->with('success','Booking updated.');}}

@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Controllers\Admin;use App\Http\Controllers\Controller;use App\Models\Booking;use Illuminate\Http\Request;
+class BookingController extends Controller{public function index(Request $r){$bookings=Booking::with(['customer','provider','service'])->when($r->filled('status'),fn($q)=>$q->where('status',$r->status))->latest()->paginate(20)->withQueryString();return view('admin.bookings.index',compact('bookings'));}public function update(Request $r,Booking $booking){$d=$r->validate(['status'=>'required|in:pending,confirmed,completed,cancelled']);$booking->update($d);return back()->with('success','Booking status updated.');}}
